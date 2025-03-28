@@ -172,3 +172,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# additions by Todd on 03/28/25
+# created to ignore data downloads and PDF archive files which are too large for repository
+/data
+*.pdf
