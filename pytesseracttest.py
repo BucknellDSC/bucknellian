@@ -23,7 +23,7 @@ def extract_text_from_pdf(pdf_path, tesseract_cmd=None):
     return full_text
 
 if __name__ == "__main__":
-    pdf_path = "/Users/kellenremley/Desktop/bucknellian/test_images/Bucknellian1990Aug31.pdf"  # Replace with  PDF path
+    pdf_path = "test_images/Bucknellian1990Aug31.pdf"  # Replace with  PDF path
     text = extract_text_from_pdf(pdf_path)
     file1 = open("/Users/kellenremley/Desktop/bucknellian/text.txt" , "w")
     file1.write(text)
