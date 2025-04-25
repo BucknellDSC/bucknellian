@@ -41,14 +41,13 @@ def write_head_content_to_text(headings_csv_output):
 
     with open(headings_text_output, "w", encoding="utf-8") as text_file:
         for _, row in df.iterrows():
-            # Write the heading
             text_file.write(f"Heading: {row['heading']}\n")
             
             # Wrap and indent the content
             wrapped_content = textwrap.fill(
-                str(row['content']),  # Ensure content is a string
-                width=80,  # Set the maximum line width
-                subsequent_indent="    "  # Indent subsequent lines
+                str(row['content']),
+                width=80,
+                subsequent_indent="    " 
             )
             text_file.write(f"Content: {wrapped_content}\n")
             text_file.write("\n")
