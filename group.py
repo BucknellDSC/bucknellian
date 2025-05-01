@@ -1,12 +1,12 @@
 import pandas as pd
 from dataframe import extract_spans  # Import the extract_spans function
 import textwrap
+import time  # Import the time module
 
 # Define paths
-pdf_path = "pdfs/b_1960-1961 pg 1 sample.pdf"
-csv_output_path = "/Users/thaonguyen/Desktop/bucknellian/spans_tagged.csv"
-headings_csv_output = "/Users/thaonguyen/Desktop/bucknellian/headings_and_content.csv"
-headings_text_output = "/Users/thaonguyen/Desktop/bucknellian/headings_and_content.txt"
+csv_input_path = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1960-1961_tagged_output.csv"
+headings_csv_output = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1960-1961_headings_and_content.csv"
+headings_text_output = "/Users/thaonguyen/Desktop/bucknellian/outputs/txt_output/1960-1961_headings_and_content.txt"
 
 def group_headings_and_content(span_df):
     sections = []
@@ -53,15 +53,39 @@ def write_head_content_to_text(headings_csv_output):
             text_file.write("\n")
 
 def main():
-    span_df = pd.read_csv(csv_output_path)
+    start_time = time.time()  # Start the timer
 
+    # Read the input CSV file
+    span_df = pd.read_csv(csv_input_path)
+
+    # Group headings and content
     grouped_df = group_headings_and_content(span_df)
     grouped_df.to_csv(headings_csv_output, index=False)
-
     print("Done! Grouped headings and content saved to:", headings_csv_output)
 
+    # Write headings and content to a text file
     write_head_content_to_text(headings_csv_output)
     print("Done! Grouped headings and content saved to:", headings_text_output)
+
+    end_time = time.time()  # End the timer
+
+    # Calculate elapsed time
+    elapsed_time = end_time - start_time
+    minutes = int(elapsed_time // 60)
+    seconds = elapsed_time % 60
+    print(f"Execution time: {minutes} minutes and {seconds:.2f} seconds")
+
+    # Save execution time to a CSV file
+    execution_time_csv = "/Users/thaonguyen/Desktop/bucknellian/outputs/group_execution_time.csv"
+    try:
+        # Append to the CSV file if it exists, otherwise create it
+        with open(execution_time_csv, "a", encoding="utf-8") as file:
+            if file.tell() == 0:  # Check if the file is empty
+                file.write("Input File,Minutes,Seconds\n")
+            file.write(f"{csv_input_path},{minutes},{seconds:.2f}\n")
+    except Exception as e:
+        print(f"Error writing to execution time CSV: {e}")
+    print(f"Execution time saved to: {execution_time_csv}")
 
 if __name__ == "__main__":
     main()

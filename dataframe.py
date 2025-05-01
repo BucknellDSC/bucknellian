@@ -1,11 +1,11 @@
 import fitz  # PyMuPDF
 import pandas as pd
 import re
+import time
 from unidecode import unidecode
 
-pdf_path = "pdfs/b_1960-1961 pg 1 sample.pdf"
-csv_output_path = "/Users/thaonguyen/Desktop/bucknellian/spans_tagged.csv"
-headings_csv_output = "/Users/thaonguyen/Desktop/bucknellian/headings_and_content.csv"
+pdf_path = "pdfs/b_1960-1961.pdf"
+csv_output_path = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1960-1961_tagged_output.csv"
 columns = ['page', 'xmin', 'ymin', 'xmax', 'ymax', 'text', 'is_upper', 'is_bold', 'span_font', 'font_size']
 
 def extract_spans(pdf_path):
@@ -61,35 +61,10 @@ def tag_span(row, paragraph_font_size):
     else:
         return 's'  # subtext
 
-def group_headings_and_content(span_df):
-    span_df = span_df.sort_values(by=['page', 'ymin', 'xmin'])
-
-    sections = []
-    current_heading = None
-    current_content = ""
-
-    for _, row in span_df.iterrows():
-        if row['tag'] == 'h':
-            if current_heading:
-                sections.append({
-                    "heading": current_heading,
-                    "content": current_content.strip()
-                })
-            current_heading = row['text']
-            current_content = ""
-        elif row['tag'] in ['p', 's'] and current_heading:
-            current_content += row['text'] + " "
-
-    if current_heading:
-        sections.append({
-            "heading": current_heading,
-            "content": current_content.strip()
-        })
-
-    return pd.DataFrame(sections)
-
 
 def main():
+    start_time = time.time()
+
     print("Extracting spans from PDF...")
     span_df = extract_spans(pdf_path)
 
@@ -100,13 +75,26 @@ def main():
     print("Saving tagged spans...")
     span_df.to_csv(csv_output_path, index=False)
 
-    print("Grouping into headings and content...")
-    grouped_df = group_headings_and_content(span_df)
-    grouped_df.to_csv(headings_csv_output, index=False)
-
     print("Done! Tagged span data saved to:", csv_output_path)
-    print("Grouped headings and content saved to:", headings_csv_output)
+    end_time = time.time()
+    
+    # Convert execution time to minutes and seconds
+    elapsed_time = end_time - start_time
+    minutes = int(elapsed_time // 60)
+    seconds = elapsed_time % 60
+    print(f"Execution time: {minutes} minutes and {seconds:.2f} seconds")
 
+    # Save execution time to a CSV file
+    execution_time_csv = "/Users/thaonguyen/Desktop/bucknellian/outputs/dataframe_execution_time.csv"
+    try:
+        # Append to the CSV file if it exists, otherwise create it
+        with open(execution_time_csv, "a", encoding="utf-8") as file:
+            if file.tell() == 0:  # Check if the file is empty
+                file.write("PDF File,Minutes,Seconds\n")
+            file.write(f"{pdf_path},{minutes},{seconds:.2f}\n")
+    except Exception as e:
+        print(f"Error writing to execution time CSV: {e}")
+    print(f"Execution time saved to: {execution_time_csv}")
 
 if __name__ == "__main__":
     main()
