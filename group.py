@@ -4,9 +4,9 @@ import textwrap
 import time  # Import the time module
 
 # Define paths
-csv_input_path = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1960-1961_tagged_output.csv"
-headings_csv_output = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/test_1960-1961_headings_and_content.csv"
-headings_text_output = "/Users/thaonguyen/Desktop/bucknellian/outputs/txt_output/test_1960-1961_headings_and_content.txt"
+csv_input_path = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1970-1971_tagged_output.csv"
+headings_csv_output = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1970-1971_headings_and_content.csv"
+headings_text_output = "/Users/thaonguyen/Desktop/bucknellian/outputs/txt_output/1970-1971_headings_and_content.txt"
 
 def group_headings_and_content(span_df):
     sections = []
