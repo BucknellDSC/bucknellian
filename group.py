@@ -4,9 +4,9 @@ import textwrap
 import time  # Import the time module
 
 # Define paths
-csv_input_path = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1920-1921_tagged_output.csv"
-headings_csv_output = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1920-1921_headings_and_content.csv"
-headings_text_output = "/Users/thaonguyen/Desktop/bucknellian/outputs/txt_output/1920-1921_headings_and_content.txt"
+csv_input_path = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1960-1961_tagged_output.csv"
+headings_csv_output = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/test_1960-1961_headings_and_content.csv"
+headings_text_output = "/Users/thaonguyen/Desktop/bucknellian/outputs/txt_output/test_1960-1961_headings_and_content.txt"
 
 def group_headings_and_content(span_df):
     sections = []
@@ -23,7 +23,9 @@ def group_headings_and_content(span_df):
             current_heading = row['text']
             current_content = ""
         elif row['tag'] in ['p', 's'] and current_heading:
-            current_content += row['text'] + " "
+            if pd.notnull(row['text']):
+                current_content += str(row['text']) + " "
+
 
     if current_heading:
         sections.append({
