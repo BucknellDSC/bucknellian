@@ -78,18 +78,18 @@ def main():
     print("Done! Tagged span data saved to:", csv_output_path)
     end_time = time.time()
     
-    # Convert execution time to minutes and seconds
+    # Elapsed time calculation
     elapsed_time = end_time - start_time
     minutes = int(elapsed_time // 60)
     seconds = elapsed_time % 60
     print(f"Execution time: {minutes} minutes and {seconds:.2f} seconds")
 
-    # Save execution time to a CSV file
+    # Execution time to a CSV file
     execution_time_csv = "/Users/thaonguyen/Desktop/bucknellian/outputs/dataframe_execution_time.csv"
     try:
         # Append to the CSV file if it exists, otherwise create it
         with open(execution_time_csv, "a", encoding="utf-8") as file:
-            if file.tell() == 0:  # Check if the file is empty
+            if file.tell() == 0:
                 file.write("PDF File,Minutes,Seconds\n")
             file.write(f"{pdf_path},{minutes},{seconds:.2f}\n")
     except Exception as e:

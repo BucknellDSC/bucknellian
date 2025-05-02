@@ -55,9 +55,9 @@ def write_head_content_to_text(headings_csv_output):
             text_file.write("\n")
 
 def main():
-    start_time = time.time()  # Start the timer
+    start_time = time.time()
 
-    # Read the input CSV file
+    # Read CSV file
     span_df = pd.read_csv(csv_input_path)
 
     # Group headings and content
@@ -65,24 +65,24 @@ def main():
     grouped_df.to_csv(headings_csv_output, index=False)
     print("Done! Grouped headings and content saved to:", headings_csv_output)
 
-    # Write headings and content to a text file
+    # Write headings and content to txt
     write_head_content_to_text(headings_csv_output)
     print("Done! Grouped headings and content saved to:", headings_text_output)
 
-    end_time = time.time()  # End the timer
+    end_time = time.time()
 
-    # Calculate elapsed time
+    # Elapsed time
     elapsed_time = end_time - start_time
     minutes = int(elapsed_time // 60)
     seconds = elapsed_time % 60
     print(f"Execution time: {minutes} minutes and {seconds:.2f} seconds")
 
-    # Save execution time to a CSV file
+    # Execution time to a CSV file
     execution_time_csv = "/Users/thaonguyen/Desktop/bucknellian/outputs/group_execution_time.csv"
     try:
         # Append to the CSV file if it exists, otherwise create it
         with open(execution_time_csv, "a", encoding="utf-8") as file:
-            if file.tell() == 0:  # Check if the file is empty
+            if file.tell() == 0:
                 file.write("Input File,Minutes,Seconds\n")
             file.write(f"{csv_input_path},{minutes},{seconds:.2f}\n")
     except Exception as e:
