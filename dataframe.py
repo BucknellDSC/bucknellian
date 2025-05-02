@@ -4,8 +4,8 @@ import re
 import time
 from unidecode import unidecode
 
-pdf_path = "pdfs/bucknellian_1980-1981.pdf"
-csv_output_path = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1980-1981_tagged_output.csv"
+pdf_path = "pdfs/Bucknellian_1990-1991.pdf"
+csv_output_path = "/Users/thaonguyen/Desktop/bucknellian/outputs/csv_output/1990-1991_tagged_output.csv"
 columns = ['page', 'xmin', 'ymin', 'xmax', 'ymax', 'text', 'is_upper', 'is_bold', 'span_font', 'font_size']
 
 def extract_spans(pdf_path):
