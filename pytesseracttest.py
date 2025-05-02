@@ -1,10 +1,12 @@
 import pytesseract
 from pdf2image import convert_from_path
+import time
 import os
 
-print("start")
+
 def extract_text_from_pdf(pdf_path, tesseract_cmd=None):
     # Optional: Set tesseract command path
+
     if tesseract_cmd:
         pytesseract.pytesseract.tesseract_cmd = tesseract_cmd
 
@@ -20,15 +22,21 @@ def extract_text_from_pdf(pdf_path, tesseract_cmd=None):
         text = pytesseract.image_to_string(image)
         full_text += f"\n\n--- Page {i + 1} ---\n{text}"
     print("text extract done")
+ 
     return full_text
 
 if __name__ == "__main__":
-    pdf_path = "test_images/Bucknellian1990Aug31.pdf"  # Replace with  PDF path
+    start_time_total = time.time()
+    start_time_cpu = time.process_time()
+
+    pdf_path = "/Users/kellenremley/Desktop/bucknellian/newspapers/Bucknellian_1990-1991.pdf" # Replace with  PDF path
     text = extract_text_from_pdf(pdf_path)
-    file1 = open("/Users/kellenremley/Desktop/bucknellian/text.txt" , "w")
+    file1 = open("/Users/kellenremley/Desktop/bucknellian/test/pytesttext.txt" , "w")
     file1.write(text)
     file1.close()
 
-
-    print(text)
+    end_time_total = time.time()
+    end_time_cpu = time.process_time()
+    print(f"Execution Time: {end_time_total - start_time_total} seconds")
+    print(f"CPU Execution Time: {end_time_cpu - start_time_cpu} seconds")
 
