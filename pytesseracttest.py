@@ -29,9 +29,9 @@ if __name__ == "__main__":
     start_time_total = time.time()
     start_time_cpu = time.process_time()
 
-    pdf_path = "/Users/kellenremley/Desktop/bucknellian/newspapers/Bucknellian_1990-1991.pdf" # Replace with  PDF path
+    pdf_path = "/Users/kellenremley/Desktop/bucknellian/newspapers/Bucknellian_1980-1981.pdf" # Replace with  PDF path
     text = extract_text_from_pdf(pdf_path)
-    file1 = open("/Users/kellenremley/Desktop/bucknellian/test/pytesttext.txt" , "w")
+    file1 = open("/Users/kellenremley/Desktop/bucknellian/text/text80-81.txt" , "w")
     file1.write(text)
     file1.close()
 
